@@ -6,25 +6,30 @@
 
 //var_dump($_POST);
 
-	$signupEmailError = "*";
+//Muutujad
+	$signupEmailError = " ";
+	$signupEmail = " ";
 
-	// kas keegi vajutas nuppu ja see on olemas
+	//kas keegi vajutas nuppu ja see on olemas
 
 	if (isset ($_POST["signupEmail"])) {
 
 		//on olemas
 		// kas epost on tühi
-
 		if (empty ($_POST["signupEmail"])) {
 
 			// on tühi
-			$signupEmailError = "Väli on kohustuslik";
+			$signupEmailError = "* Väli on kohustuslik!";
+
+		} else {
+			// email on olemas ja õige
+			$signupEmail = $_POST["signupEmail"];
 
 		}
 
 	}
 
-	$signupPasswordError = "*";
+	$signupPasswordError = " ";
 
 
 	if (isset ($_POST["signupPassword"])) {
@@ -32,7 +37,7 @@
 
 		if (empty ($_POST["signupPassword"])) {
 
-			$signupPasswordError = "Väli on kohustuslik";
+			$signupPasswordError = "* Väli on kohustuslik";
 
 		} else {
 
@@ -46,20 +51,20 @@
 
 	}
 
-	$firstnameError = "*";
+	$firstnameError = " ";
 
 	if (isset ($_POST["firstname"])) {
 
 
 		if (empty ($_POST["firstname"])) {
 
-			$firstnameError = "Väli on kohustuslik";
+			$firstnameError = "* Väli on kohustuslik";
 
 		}
 
 	}
 
-	$lastnameError = "*";
+	$lastnameError = " ";
 
 
 	if (isset ($_POST["lastname"])) {
@@ -67,24 +72,26 @@
 
 		if (empty ($_POST["lastname"])) {
 
-			$lastnameError = "Väli on kohustuslik";
+			$lastnameError = "* Väli on kohustuslik";
 
 		}
 
 	}
 
-	$genderError = "*";
+	//vaikimisi väärtus
+	$gender = "";
+	$genderError = "";
 
 	if (isset ($_POST["gender"])) {
-
-
 		if (empty ($_POST["gender"])) {
-// Ei toimi nii nagu vaja! Help needed!
-			$genderError = "- Valik on kohustuslik";
+// IKKA EI TÖÖTA!!!
+			$genderError = "* Valik on kohustuslik!";
 
+		} else {
+			$gender = $_POST["gender"];
 		}
 
-  }
+	}
 
 
 ?>
@@ -119,7 +126,7 @@
 		<form method="POST" >
 
 			<label> E-post</label><br>
-			<input name="signupEmail" type="email"> <?php echo $signupEmailError; ?>
+			<input name="signupEmail" type="email" value="<?=$signupEmail;?>"> <?php echo $signupEmailError; ?>
 
 			<br><br>
 			<label> Parool</label><br>
@@ -143,8 +150,18 @@
 			<br><br>
 
 			<label> Sugu</label> <?php echo $genderError; ?> <br>
-			<input name="gender" type="radio" value="male"> Mees <br>
-			<input name="gender" type="radio" value="female"> Naine<br>
+
+			<?php if ($gender == "male") { ?>
+				<input type="radio" name="gender" value="male" checked> Male<br>
+			<?php } else { ?>
+				<input type="radio" name="gender" value="male" > Male<br>
+			<?php } ?>
+
+			<?php if ($gender == "female") { ?>
+				<input type="radio" name="gender" value="female" checked> Female<br>
+			<?php } else { ?>
+				<input type="radio" name="gender" value="female" > Female<br>
+			<?php } ?>
 
 			<br><br>
 
