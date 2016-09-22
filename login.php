@@ -1,5 +1,7 @@
 <?php
 
+	require("../../config.php");
+
 //var_dump($_GET);
 
 //echo "<br>";
@@ -90,6 +92,46 @@
 		} else {
 			$gender = $_POST["gender"];
 		}
+
+	}
+
+	if ( $signupEmailError == " " &&
+			 $signupPasswordError == " " &&
+			 isset($_POST["signupEmail"]) &&
+			 isset($_POST["signupPassword"])
+	   ) {
+
+		//vigu ei olnud, kõik on olemas
+		echo "Salvestan...<br>";
+		echo "email ".$signupEmail."<br>";
+		echo "parool".$_POST["signupPassword"]."<br>";
+
+		$password = hash("sha512", $_POST["signupPassword"]);
+
+		echo $password;
+
+		//loon yhenduse
+		$database = "if16_romil";
+
+		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword,
+		$database);
+
+		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?, ?)");
+
+		//asendan kysim2rgid
+		//iga m2rgi kohta tuleb lisada yks t2ht - mis tyypi muutuja on
+		//s - string
+		//i - int
+		//d - double
+		$stmt->bind_param("ss", $signupEmail, $password);
+
+		if ($stmt->execute()) {
+			echo "õnnestus";
+		} else {
+			echo "ERROR ".$stmt->error;
+
+		}
+
 
 	}
 
