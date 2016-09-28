@@ -111,7 +111,7 @@
 		echo $password;
 
 		//loon yhenduse
-		$database = "if16_romil";
+		$database = "if16_taankomm";
 
 		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword,
 		$database);
