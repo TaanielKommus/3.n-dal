@@ -1,6 +1,7 @@
 <?php
 
 	require("../../config.php");
+	require("functions.php");
 
 //var_dump($_GET);
 
@@ -108,29 +109,9 @@
 
 		$password = hash("sha512", $_POST["signupPassword"]);
 
-		echo $password;
+		echo $password."<br>";
 
-		//loon yhenduse
-		$database = "if16_taankomm";
-
-		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword,
-		$database);
-
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?, ?)");
-
-		//asendan kysim2rgid
-		//iga m2rgi kohta tuleb lisada yks t2ht - mis tyypi muutuja on
-		//s - string
-		//i - int
-		//d - double
-		$stmt->bind_param("ss", $signupEmail, $password);
-
-		if ($stmt->execute()) {
-			echo "õnnestus";
-		} else {
-			echo "ERROR ".$stmt->error;
-
-		}
+		signup($signupEmail, $password);
 
 
 	}
@@ -219,19 +200,11 @@
 
 			<input type="submit" value="Loo kasutaja">
 
+			<br><br>
 
 		</form>
 
-<br><br><br>
-MVP Idee
-<br><br>
-Nn internetiraadio, mis mängib 24/7 igasugust muusikat. Otsene "kvaliteedikontroll"
-algselt (?) puuduks, mis võimaldaks ka vähetuntud ja muidu sahtlisse kirjutavatel artistidel
-oma loomingut esitleda. Sisuliselt oleks tegemist kohaga, kus noored/vanad/uued/tuntud artistid saaksid oma
-loomingut tasuta jagada ja kust entusiastlikumad melomaanid leiaksid potentsiaalselt uut ja põnevat muusikat.
-Raadio formaat garanteerib artistile, et tema teos mingil hetkel 24h tunni jooksul kindlasti mängib.
-Puuduks DJ - selle asemel on random playlist, mille infot (kes mängib millal jne)saaks näha netist/appist vms.
-Mõned mõtted on veel, aga neid veel ei avalada :).
+
 
 	</body>
 </html>
