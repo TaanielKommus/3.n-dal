@@ -54,7 +54,7 @@
               $hash = hash("sha512", $password);
 
               if ($hash == $passwordFromDb) {
-                echo "Kasutaja $id logis sisses";
+                echo "Kasutaja $id logis sisse";
 
               } else {
                 echo "parool vale";
