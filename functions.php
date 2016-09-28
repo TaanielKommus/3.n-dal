@@ -27,7 +27,45 @@
 
         }
 
+        function login($email, $password) {
 
+          $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
+      		$GLOBALS["database"]);
+
+      		$stmt = $mysqli->prepare("SELECT id, email, password, created
+          FROM user_sample
+          WHERE email = ?
+          ");
+
+      		echo "ERROR ".$stmt->error;
+
+          //asendan kysim2rgi
+          $stmt->bind_param("s", $email);
+
+          //rea kohta tulba v22rtus
+          $stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created);
+
+          $stmt->execute();
+
+          //ainult SELECTi puhul
+          if($stmt->fetch()) {
+              //oli olemas, rida k2es
+              //kasutaja sisestad sisselogimiseks
+              $hash = hash("sha512", $password);
+
+              if ($hash == $passwordFromDb) {
+                echo "Kasutaja $id logis sisses";
+
+              } else {
+                echo "parool vale";
+              }
+          } else {
+
+            //ei olnud yhtegi rida
+            echo "Sellise emailiga $email kasutajat ei ole olemas";
+          }
+
+        }
 
 
 
