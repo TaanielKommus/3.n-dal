@@ -1,4 +1,10 @@
 <?php
+
+      //see fail peab olema seotud k6igiga kus
+      //tahame sessiooni kasutada
+      //saab kasutada nyyd $_SESSION muutujat
+      session_start();
+
       $database = "if16_taankomm";
       //functions.php
 
@@ -10,7 +16,7 @@
       		$GLOBALS["database"]);
 
       		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?, ?)");
-
+          echo $mysqli->error;
       		//asendan kysim2rgid
       		//iga m2rgi kohta tuleb lisada yks t2ht - mis tyypi muutuja on
       		//s - string
@@ -29,6 +35,8 @@
 
         function login($email, $password) {
 
+          $notice = " ";
+
           $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
       		$GLOBALS["database"]);
 
@@ -37,7 +45,7 @@
           WHERE email = ?
           ");
 
-      		echo "ERROR ".$stmt->error;
+      		echo $mysqli->error;
 
           //asendan kysim2rgi
           $stmt->bind_param("s", $email);
@@ -56,14 +64,22 @@
               if ($hash == $passwordFromDb) {
                 echo "Kasutaja $id logis sisse";
 
+                $_SESSION["userId"] = $id;
+                $_SESSION["userEmail"] = $emailFromDb;
+
+                header("Location: data.php");
+
+
               } else {
-                echo "parool vale";
+                $notice = "Parool vale";
               }
           } else {
 
             //ei olnud yhtegi rida
-            echo "Sellise emailiga $email kasutajat ei ole olemas";
+            $notice = "Sellise emailiga $email kasutajat ei ole olemas";
           }
+
+          return $notice;
 
         }
 

@@ -3,6 +3,10 @@
 	require("../../config.php");
 	require("functions.php");
 
+	// kui on sisse loginud siis suunan data lehele
+	if(isset($_SESSION["userId"])) {
+		header("Location: data.php");
+	}
 //var_dump($_GET);
 
 //echo "<br>";
@@ -115,7 +119,7 @@
 
 
 	}
-
+	$notice = " ";
 	//kas kasutaja tahab sisse logida
 	if ( isset($_POST["loginEmail"]) &&
 			isset($_POST["loginPassword"]) &&
@@ -124,7 +128,7 @@
 
 	) {
 
-		login($_POST["loginEmail"], $_POST["loginPassword"]);
+		$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
 	}
 
 ?>
@@ -137,7 +141,7 @@
 	<body>
 
 		<h1>Logi sisse</h1>
-
+		<p style="color:red;"><?=$notice;?></p>
 		<form method="POST" >
 
 			<label> E-post</label><br>
