@@ -3,6 +3,8 @@
       //see fail peab olema seotud k6igiga kus
       //tahame sessiooni kasutada
       //saab kasutada nyyd $_SESSION muutujat
+      require("../../config.php");
+
       session_start();
 
       $database = "if16_taankomm";
@@ -84,7 +86,24 @@
         }
 
 
+        function saveEvent($age, $color) {
 
+          $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
+          $GLOBALS["database"]);
+
+          $stmt = $mysqli->prepare("INSERT INTO tk (age, color) VALUES (?, ?)");
+          echo $mysqli->error;
+
+          $stmt->bind_param("is", $age, $color);
+
+          if ($stmt->execute()) {
+            echo "õnnestus";
+          } else {
+            echo "ERROR ".$stmt->error;
+
+          }
+
+        }
 
 
 

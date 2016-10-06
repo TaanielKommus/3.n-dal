@@ -1,6 +1,6 @@
 <?php
 
-	require("../../config.php");
+	
 	require("functions.php");
 
 	// kui on sisse loginud siis suunan data lehele
